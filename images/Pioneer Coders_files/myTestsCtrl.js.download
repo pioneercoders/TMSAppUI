@@ -1,0 +1,6 @@
+angular.module('pcModule').controller('myTestsCtrl', function($scope, commonService) {
+	$scope.init = function() {
+		jdoodle();
+	};
+	$scope.init();
+});

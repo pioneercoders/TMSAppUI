@@ -1,0 +1,416 @@
+[class*="col-"] {
+		float: left;
+	}
+	.col-1 {width: 8.33%;}
+	.col-2 {width: 16.66%;}
+	.col-3 {width: 25%;}
+	.col-4 {width: 33.33%;}
+	.col-5 {width: 41.66%;}
+	.col-6 {width: 50%;}
+	.col-7 {width: 58.33%;}
+	.col-8 {width: 66.66%;}
+	.col-9 {width: 75%;}
+	.col-10 {width: 83.33%;}
+	.col-11 {width: 91.66%;}
+	.col-12 {width: 100%;}
+	
+	@font-face {
+		font-family:Roboto-Regular;
+		src: url(../fonts/custom-fonts/Roboto-Regular.ttf);
+	}
+	@font-face {
+		font-family:Roboto-Bold;
+		src: url(../fonts/custom-fonts/Roboto-Bold.ttf);
+	}
+	*{
+		box-sizing:border-box;
+	}	
+	body{
+		padding:0;
+		margin:0;
+		position:relative;
+		font-family:Roboto-Regular;
+	}
+/* Header of the page */
+	.header{
+		height:45px;
+		width:100%;
+		background-color:#e46f61;
+		box-shadow: 0 8px 6px -6px black;
+		float:left;
+		padding-left:60px;
+	}
+/* Logo image styles */
+	.logo img{
+		height: 45px;
+		width: 250px;
+		float:left;
+	}
+/* Login Button */
+	.header-login{
+		float:right;
+		display:inline;
+		line-height:30px;
+	}
+	.header-login span{
+		padding-left:16%;
+		font-family: Roboto-Bold;
+		font-size: 18px;
+	}
+	.header-login a{
+		text-decoration:none;
+	}
+	.emp-login {
+		border: 3px solid #f1f1f1;
+		background-color:#8ab6d0;
+		border-radius:10px;
+		margin-top:70px;
+		color:white;
+	}
+	.emp-login h2{
+		margin:0;
+		text-align:center;
+		font-family: Roboto-Bold;
+		box-shadow: 0 8px 6px -6px black;
+		border-radius:10px;
+		font-size:20px;
+		color:#ffeb3b;
+		padding:10px;
+	}
+	.container input[type=text], input[type=password] {
+		width: 90%;
+		padding: 10px 0px;
+		margin: 8px 0;
+		display: inline;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+	}
+	.container button {
+		width: 90%;
+		background-color: #4CAF50;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		border: none;
+		cursor: pointer;
+	}
+	.container button:hover {
+		opacity: 0.8;
+	}
+	.cancelbtn {
+		width: auto;
+		padding: 10px 18px;
+		background-color: #f44336;
+	}
+	.container label{
+		font-family:Roboto-Bold;
+	}
+	.imgcontainer{
+		text-align: center;
+	}
+	.imgcontainer img{
+		height:80px;
+		width:80px;
+		border-radius: 50%;
+	}
+	.container {
+		padding: 16px;
+	}
+	span.psw {
+		float: right;
+		padding-top: 16px;
+	}
+/* Heading for the below header */
+	.header-middle span{
+		padding-left:16%;
+		line-height:30px;
+		font-family: Georgia;
+		color: white;
+		text-shadow:10px 10px 10px black;
+		font-size: 22px;
+		line-height: 40px;		
+	}
+/* Side menu of body and Styles */
+	.nav{
+		background-color:#0087c7;
+		min-height:100%;
+	}
+	.nav ul{
+		margin:0;
+		padding:0;
+	}
+	.nav ul li{	
+		list-style: none;
+		margin-left: #e8e8e8;
+		font-family: Roboto-Bold;
+		cursor: pointer;
+	}
+	.nav ul li a{
+		display: block;
+		height: 38px;
+		line-height: 34px;
+		padding:10px;			
+		padding: 0 16px 0 15px;
+		font-size: 13px;
+		text-decoration: none;
+		color: #737373;
+		color:white;
+	}
+	.nav ul li span{
+		color:white;
+		font-size: 17px;
+		padding:15px;
+	}
+	.nav ul li a i{
+		line-height: 36px;
+	}
+	.nav ul li:hover a{
+		background-color:#ec9a04;
+	}
+/* Body tabs for each clickable buttons*/
+	.tabs .tabs-btn{
+		float: left;
+		height: 40px;
+		padding:0 30px;
+		margin:15px;
+		margin-left:25px;
+		line-height: 40px;
+		text-align: center;
+		font-size: 0.928em;
+		cursor: pointer;
+		border-left: 1px solid black;
+		border-right: 1px solid #E6E6E6;
+		border-top: 4px solid black;
+	}
+	.tabs-btn + .tabs-btn{
+		margin-left: -15px;
+	}
+	.tabs-btn + .tabs-btn{
+			margin-left: -15pxpx;
+	}
+	.tabs .tabs-btn:hover{
+		color:white;
+		background-color:#ec9a04;
+	}
+	.tabs .tabs-btn a{
+		text-decoration: none;
+		color: #000;
+	}
+	.tabs p{
+		background-color:#ccc;
+		text-align:center;
+		clear:both;
+		padding:5px;
+		broder-radius:10px;
+		
+	}
+/*Employee List*/
+	#emp-table{
+		margin:25px;
+		background-color: #ccc;
+		width:95%;
+		border-radius:10px;
+	}
+	#emp-table th{
+		background-color: #607d8b;
+		box-shadow: 0 8px 6px -6px black;
+		padding:10px;
+		color:white;
+	}
+	#emp-table tr td{
+		text-align:center;
+		padding:5px;
+	}
+/* Employee List*/
+	.emp-button{
+		border: none;
+		background-color: #1a635c;
+		color: white;
+		padding: 6px;
+		border-radius: 8px;
+		float: right;
+		margin-right: 50px;
+		font-family: Roboto-Bold;
+	}
+/*Project task given to employee*/
+	.timesheet{
+		margin:20px;
+		text-align:center;
+		width:95%;
+	}
+	.timesheet-header{
+		text-align:center;
+		font-family: Roboto-Bold;
+		box-shadow: 0 8px 6px -6px black;
+		border-radius:10px;
+		font-size:20px;
+		color:#ffeb3b;
+		padding:10px;
+		margin-bottom:15px;
+		background-color: #ca677e;
+	}
+	.timesheetButton{
+		margin:20px;
+		padding:10px;
+		background-color:gray;
+		color:white;
+		position:absolute;
+		width:40%;
+		border-radius:10px;
+	}
+	.timesheet-button{
+		border:none;
+		background-color:#e46f61;
+		color:white;
+		padding:10px;
+		border-radius:8px;
+		float:right;
+		margin-right:70px;
+		font-family: Roboto-Bold;
+	}
+	.timesheet-table{
+		width:95%;
+		margin:25px;
+		background-color:#ccc;
+	}
+	.timesheet-table tr th{
+		background-color: #1E90FF	;
+		box-shadow: 0 8px 6px -6px black;
+		padding:10px;
+		color:white;
+	}
+	.timesheet-table tr select{
+		background-color:#e8e8e8;
+		border:none;
+		border-radius:5px;
+		padding:5px;
+	}
+	.timesheet-table tr td{
+		text-align:center;
+		padding:5px;
+	}
+	.timesheet-table tr td input{
+		background-color:#e8e8e8;
+		border:none;
+		width:95%;
+		border-radius:5px;
+		padding:5px;
+	}
+/* Attendace button content page*/
+	.Attend-time{
+		margin:20px;
+		padding:10px;
+		background-color:gray;
+		color:white;
+		position:absolute;
+		width:40%;
+		border-radius:10px;
+		text-align:center;
+	}
+	.ts-header{
+		text-align:center;
+		font-family: Roboto-Bold;
+		box-shadow: 0 8px 6px -6px black;
+		border-radius:10px;
+		padding:10px;
+		margin-bottom:15px;
+		background-color: #ca677e;	
+	}
+	.input-group1 label{
+		padding:5px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	.input-group1 input{
+		padding:5px;
+		width:300px;
+		margin-top:5px;
+		margin-bottom:5px;
+		border-color:none;
+		border-radius:3px;
+	}
+	.input-group1 select{
+		padding:5px;
+		width:300px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+/* Project button content page*/
+	.project-header{
+		margin:25px;
+		border:1pxsolid black;
+		display:inline-block;
+	}
+	.project-header h2{
+		margin:0;
+		padding:5px;
+		background-color:#ccc;
+		border:1px solid #f9f3f3;
+		width:1230%;
+		text-align:center;
+		box-shadow: 0 8px 6px -6px black;
+	}
+	.prjt-button .prjt{
+		border:none;
+		background-color:#e46f61;
+		color:white;
+		padding:10px;
+		border-radius:8px;
+		float:right;
+		margin-right:70px;
+		font-family: Roboto-Bold;
+	}
+	.projectDetails{
+		margin:20px;
+		padding:10px;
+		background-color:gray;
+		color:white;
+		position:absolute;
+		width:40%;
+		border-radius:10px;
+	}
+	
+	.input-group label{
+		padding:5px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	.input-group input{
+		padding:5px;
+		width:300px;
+		margin-top:5px;
+		margin-bottom:5px;
+		border-color:none;
+		border-radius:3px;
+	}
+	.input-group select{
+		padding:5px;
+		width:300px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	.projectDetails p{
+		padding:5px;
+	}
+/* Project table content for project page*/
+	#prjt-table{
+		margin:25px;
+		background-color: #ccc;
+		width:95%;
+	}
+	#prjt-table th{
+		background-color: #1E90FF	;
+		box-shadow: 0 8px 6px -6px black;
+		padding:10px;
+		color:white;
+	}
+	#prjt-table tr select{
+		background-color:#e8e8e8;
+		border:none;
+		border-radius:5px;
+		padding:5px;
+	}
+	#prjt-table tr td{
+		text-align:center;
+		padding:5px;
+	}

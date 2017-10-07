@@ -1,0 +1,85 @@
+var app = angular.module('pcModule');
+app.controller('tutorialsCtrl',function($scope,$http,$timeout,$stateParams,commonService){
+	var topics = TOPICS_DATA;
+
+	$scope.init=function(){
+		$scope.currentTopic={};
+		$scope.contentLoader=false;
+		$scope.changeTechnology($stateParams.technologyKey);
+	};
+
+	$scope.changeTechnology=function(technologyKey){
+		$scope.currentTopics = topics[technologyKey];
+		if($scope.currentTopics.length) {
+			$scope.selectTopic($scope.currentTopics[0]);
+		}
+	};
+	$scope.selectTopic = function(currentModuleName) {
+		document.body.scrollTop = '0';
+		$scope.currentTopic = currentModuleName;
+		$scope.getTemplate(currentModuleName);
+		$('.tabs [data-tabs-id]')[0].click();
+		
+	};
+	
+	$scope.getTemplate = function(obj) {
+		$scope.contentData=undefined;
+		$scope.programsData=undefined;
+		$scope.quizData=undefined;
+		$scope.toggleBoolean('contentLoader');
+		commonService.getTemplate(obj,'content').then(function(res){
+			$scope.contentData=res;
+			$scope.toggleBoolean('contentLoader');
+			$timeout(Prism.highlightAll,20);
+		}).then(function(res){
+			commonService.getTemplate(obj,'programs').then(function(res){
+				$scope.programsData=res;
+				$timeout(Prism.highlightAll,20);
+			});
+			commonService.getTemplate(obj,'quiz').then(function(res){
+				$scope.quizData=res;
+				$timeout(Prism.highlightAll,20);
+			});
+		});
+	};
+	
+	/**  store quiz info if user is logged in. 
+	 * 1) loop through all the quiz questions ans and compare with act answers in quiz html pages. 
+	 * 2) prepare quiz details object and send to service using saveQuizResults() API to store.
+	 */
+	$scope.submitQuiz = function(){
+		$scope.quizErrorMsg= undefined;
+		$scope.quizSuccessMsg = undefined;
+		$scope.quizObj.marks =0;
+		for(var i=0; i<$scope.quizObj.actAnswers.length; i++) {
+			if(!$scope.quizObj.selAnswers[i]) {
+				$scope.quizErrorMsg="You missed question # "+(i+1);
+				$scope.toggleBoolean('showPopup');
+				return;
+			}
+			if($scope.quizObj.selAnswers[i] == $scope.quizObj.actAnswers[i]){
+				$scope.quizObj.marks++;
+			}
+		}
+		$scope.quizSuccessMsg = 'You scored :: ' + $scope.quizObj.marks +' out of ' + $scope.quizObj.actAnswers.length ;
+		$scope.toggleBoolean('showPopup');
+		// store quiz results in db.
+		if($scope.loggedInUser && $scope.loggedInUser.id) {
+			var quizInfoObj = {
+					userId:$scope.loggedInUser.id,
+					technology:$stateParams.technologyKey,
+					topic:$scope.currentTopic.topicName,
+					questions:$scope.quizObj.actAnswers.length,
+					answered:$scope.quizObj.marks,
+			};
+			$http.post("user/addquiz",quizInfoObj).then(function(res){
+				if(res.isSuccess) {
+				}
+			});
+		};
+	};
+	$scope.toggleBoolean=function(state){
+		$scope[state] = !$scope[state];
+	};
+	$scope.init();
+});

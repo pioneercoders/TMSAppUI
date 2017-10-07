@@ -1,0 +1,262 @@
+angular.module('pcModule').controller('profileCtrl', function($scope, $log, $http, userService,commonService,$timeout) {
+	$scope.init = function() {
+		$scope.addSuccessMsg=undefined;
+		$scope.eduSuccessMsg=undefined;
+		$scope.projectSuccessMsg=undefined;
+		$scope.skillsetSuccessMsg=undefined;
+		$scope.showPopup = undefined;
+		 commonService.getLogUserInfo('userInfo').then(function(res){
+			 if(res) {
+				 $scope.loggedInUser = res;
+				userService.getUserData($scope.loggedInUser.id).then(function(res) {
+					$scope.completeProfile = res;
+					if($scope.completeProfile.user.address == null) {
+						$scope.formEdit.isAddressEdited = true;
+					} // condition for formEdit to address section
+					
+					if($scope.completeProfile.education == null) {
+						$scope.formEdit.isEducationEdited = true;
+						$scope.completeProfile.education = {
+							educationInfo: []
+						};
+						$scope.addEduInfoPanel();
+					}// condition for formEdit to education section
+					
+					if($scope.completeProfile.project == null) {
+						$scope.formEdit.isProjectEdited = true;
+						$scope.completeProfile.project = {
+							projectInfo: []
+						};
+						$scope.addProjectPanel();
+					}
+					
+				});	
+			 }
+			 
+		 });
+	};
+	$scope.formEdit = {};    //form object
+
+	$scope.defaultEduObj={educationType:'SSC',instituteName:'',branch:'',yearOfPassing:'',percentage:''}; // empty educational info object
+	$scope.defaultProObj={}
+	
+	
+	$scope.eduTypes = ["SSC", "Inter/PUC", "Graduation", "PG", "Ph.D", "Test"];
+	
+	$scope.eduTypestwo = ["SSC", "Inter/PUC", "Graduation", "PG", "Ph.D", "Test"];
+	
+	$scope.education = {	
+		educationone :{
+			educationtype:"",
+			schoolUniversity:"",
+			branch:"",
+			yearofpassing:"",
+			percentage:"",
+		},
+		educationtwo :{
+			educationtype:"",
+			schoolUniversity:"",
+			branch:"",
+			yearofpassing:"",
+			percentage:"",
+		}
+	};
+	
+	$scope.project = {	
+			projectone :{
+				name:"",
+				description:"",
+				startdate:"",
+				enddate:"",
+				responsibilities:"",
+			},
+			projectonetwo :{
+				educationtype:"",
+				schoolUniversity:"",
+				branch:"",
+				yearofpassing:"",
+				percentage:"",
+			}
+		};
+	$scope.countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"
+	            		,"Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands"
+	            		,"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica"
+	            		,"Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea"
+	            		,"Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana"
+	            		,"Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India"
+	            		,"Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia"
+	            		,"Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania"
+	            		,"Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia"
+	            		,"New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal"
+	            		,"Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles"
+	            		,"Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan"
+	            		,"Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia"
+	            		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
+	            		,"Yemen","Zambia","Zimbabwe"];
+	//$scope.skillset = ["CSS ", "JAVASCRIPT ", "ANGULARJS ", "C ", "JAVA"];
+	
+	$scope.loadTags = function(query) {
+		return $http.get('resources/js/controllers/skillsetjson.json');
+	};
+	
+	$scope.saveAddress = function() {
+		var req = angular.copy($scope.completeProfile.user);
+		userService.updateUser(req).then(function(res) {
+			$scope.toggleView('isAddressEdited','formEdit' );
+			$scope.addSuccessMsg=true;
+			$timeout(function(){
+				$scope.addSuccessMsg=undefined;	
+			},6000);
+		});		
+	};
+	
+	$scope.updateEducation = function(){
+		var req = angular.copy($scope.completeProfile.education);
+		req.userId = $scope.completeProfile.user.id;  // db user id creation for save data and edit data from user side
+		userService.updateEdcuationDetails(req).then(function(res){	
+			if(res){
+				_parseEducationInfo(res);
+			}
+		});
+	};
+	
+	$scope.updateProject = function(){
+		var req = angular.copy($scope.completeProfile.project);
+		req.userId = $scope.completeProfile.user.id;  // db user id creation for save data and edit data from user side
+		userService.updateProjectDetails(req).then(function(res){	
+			if(res){
+				 _parseProjectInfo(res); // converting string to objects 
+			}
+		});
+	};
+	
+	$scope.submitskillset = function() {
+		var req = angular.copy($scope.completeProfile.skillset);
+		req.userId = $scope.loggedInUser.id;
+		userService.updateSkillsetDetails(req).then(function(res) {
+			if(res) {
+				_parseSkillsetInfo(res);
+			}
+			
+		});		
+	};
+	// to toggle edit and read only forms
+	$scope.toggleView = function(state,parentObj) {
+		if(parentObj==undefined) {
+			$scope[state] = !$scope[state];
+		} else {
+			$scope[parentObj][state] = !$scope[parentObj][state];
+		}
+	
+	};
+	
+	$scope.addEduInfoPanel = function(){
+		if($scope.completeProfile.education.educationInfo.length<5){
+			var obj = angular.copy($scope.defaultEduObj);
+			if($scope.completeProfile.education.educationInfo.length==1){
+				obj.educationType="Inter/PUC";
+			}else if($scope.completeProfile.education.educationInfo.length==2){
+				obj.educationType="Graduation";
+			}else if($scope.completeProfile.education.educationInfo.length==3){
+				obj.educationType="P.G";
+			}else if($scope.completeProfile.education.educationInfo.length==4){
+				obj.educationType="Ph.D";
+			}
+			$scope.completeProfile.education.educationInfo.push(obj);
+		};
+	};  //add panel for Education
+	
+	
+	$scope.addProjectPanel = function(){
+		if($scope.completeProfile.project.projectInfo.length<5){
+			var obj = angular.copy($scope.defaultProObj);	
+			$scope.completeProfile.project.projectInfo.push(obj);
+		};
+	};
+	
+	
+	function _parseProjectInfo(project) {
+		if(isEmpty(project) || isEmpty(project.projectInfo)) {
+			$scope.formEdit.isProjectEdited = true;
+			$scope.completeProfile.project = angular.copy({
+				userId: $scope.loggedInUser.id,
+				projectInfo:[]
+			});
+			$scope.addProjectInfoPanel();
+		} else {
+			$scope.completeProfile.project = project;
+			$scope.completeProfile.project.projectInfo =JSON.parse(project.projectInfo); 
+			$scope.formEdit.isProjectEdited = false ;
+		};
+		$scope.projectSuccessMsg=true;
+		$timeout(function(){
+			$scope.projectSuccessMsg=undefined;	
+		},6000);
+
+	}
+	
+	function _parseEducationInfo(education){
+		if(isEmpty(education) || isEmpty(education.educationInfo)){
+			$scope.formEdit.isEducationEdited = true;
+			$scope.completeProfile.education=angular.copy({
+				userId:$scope.loggedInUser.id,
+				educationInfo:[]
+			});
+			$scope.addEduInfoPanel();
+		}else{
+			$scope.completeProfile.education=education;
+			$scope.completeProfile.education.educationInfo=JSON.parse(education.educationInfo);
+			$scope.formEdit.isEducationEdited = false;
+		}
+		$scope.eduSuccessMsg=true;
+		$timeout(function(){
+			$scope.eduSuccessMsg=undefined;	
+		},6000);
+	}
+	function _parseSkillsetInfo(skillset) {
+		if(isEmpty(skillset) || isEmpty(skillset.skills)) {
+			$scope.formEdit.isSkillsetEdited = true;
+			$scope.completeProfile.skillset = angular.copy({
+				userId: $scope.loggedInUser.id,
+				skills:[]
+			});
+		} else {
+			$scope.completeProfile.skillset = skillset;
+			$scope.completeProfile.skillset.skills = JSON.parse(skillset.skills); 
+			for( var i=0;i<$scope.loadTags.length;i++) {
+				for(var j=0;j<$scope.completeProfile.skillset.skills.length;j++) {
+					if($scope.loadTags[i] == $scope.completeProfile.skillset.skills[j]){
+						$scope.loadTags.splice(i,1);
+					}
+				}
+			}
+			$scope.formEdit.isSkillsetEdited = false;
+		};
+		$scope.skillsetSuccessMsg=true;
+		$timeout(function(){
+			$scope.skillsetSuccessMsg=undefined;	
+		},6000);
+	}
+	$scope.loadTags();
+		 
+	$scope.printAddress = function() {
+		$log.info($scope.address);
+		$log.info($scope.project);
+		$log.info($scope.projectone);
+		$log.info($scope.projecttwo);
+		$log.info($scope.skillset);		
+	};
+	$scope.removeEducation = function(index) {
+		$scope.completeProfile.education.educationInfo.splice(index,1);
+	};
+	// Remove Project
+	$scope.removeProject = function(index) {
+		$scope.completeProfile.project.projectInfo.splice(index,1);
+	};
+	// toggle function to toggle the views
+	$scope.toggleBoolean = function(prop) {
+		$scope[prop]= !$scope[prop];
+	};
+	
+	$scope.init();
+});

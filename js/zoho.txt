@@ -1,0 +1,11 @@
+Greetings from Zoho Mail Services.
+
+The Mail Rate Exceeded block has been imposed to avoid any misuse of Zoho Mail.
+As per product design, Zoho mail is for Business emails and not suitable for mass mailing.
+
+From logs, we see that the user is sending the same email to multiple recipients (looks like mass mailing).
+
+This is just a temporary block, and you will be able to send mails again automatically. However,
+ if you send more number of mails in a short span of time your account will get blocked again.
+
+So you can either control the number of mails you send or you can try Zoho Campaigns, where you have no such limits in sending mails.

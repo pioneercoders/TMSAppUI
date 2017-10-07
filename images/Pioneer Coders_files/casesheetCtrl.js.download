@@ -1,0 +1,33 @@
+angular.module('pcModule').controller('casesheetCtrl',function($scope,$http, commonService) {
+	$scope.init=function(){
+		$scope.caseStudiesTemplates = {};
+		$scope.getCaseSheetTemplate('html');
+		$scope.getCaseSheetTemplate('css');
+		$scope.getCaseSheetTemplate('js');
+		$scope.getCaseSheetTemplate('programming');
+	};
+	$scope.getCaseSheetTemplate=function(language){
+		commonService.getCaseSheetTemplate(language).then(function(template) {
+			$scope.caseStudiesTemplates[language] = template;
+		}, function(error) {
+			console.error(error);
+		});
+	};
+	
+	$scope.onFileSelect = function(ele) {
+		$scope.selectedFile = ele.files[0];
+		var fd = new FormData();
+		fd.append('file', $scope.selectedFile);
+		console.log(fd);
+		$http.post("upload", fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).success(function(res) {
+			console.info(res);
+			$scope.response = res.response;
+        }).error(function(error) {
+        	console.error(error);
+        });
+	};
+	$scope.init();
+});
