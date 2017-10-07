@@ -1,0 +1,23 @@
+var app = angular.module('pcModule');
+app.controller('quizCtrl',function($scope,$http,$timeout,$stateParams,commonService,userService){
+	$scope.init = function() {
+		$scope.getLogUserInfo();
+	};
+	$scope.getLogUserInfo=function(){
+		commonService.getLogUserInfo('userInfo').then(function(res){
+			$scope.loggedInUser = res;
+			$scope.getQuizResultsByUserId();
+		},function(err){
+			$scope.changeState('home');
+		});
+	};
+	
+	$scope.getQuizResultsByUserId = function() {
+		userService.getQuizResultsByUserId($scope.loggedInUser.id).then(function(res){
+			if(res.isSuccess) {
+				$scope.quizResultList = res.response;
+			}
+		});
+	};
+	$scope.init();
+});

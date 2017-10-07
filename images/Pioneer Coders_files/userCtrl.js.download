@@ -1,0 +1,75 @@
+var app = angular.module('pcModule');
+app.controller('userCtrl', function($scope, $log,$http, commonService, userService,eventService) {
+	
+	$scope.init = function (){
+		$scope.loggedInUser ={};
+		$scope.purchasedCoursesList = [];
+		// fetches user object from session storage if the user is logged in
+		commonService.getLogUserInfo('userInfo').then(function(res) {
+			$scope.loggedInUser = res;
+			$scope.getPurchasedCoursesById($scope.loggedInUser.id);
+			 $scope.getUserCompleteData();
+			$scope.getAllEventsByUserId($scope.loggedInUser.id);
+		}, function(error) {
+			console.error(error);
+		});
+	};
+	
+	// Retrieves user purchased(opted) courses
+	 $scope.getPurchasedCoursesById = function(userId){
+			$http.get('course/purchasedcourses?userId='+userId).then(function(res){
+				if(res.data.isSuccess && res.data.response.length) {
+					for(var i=0;i<res.data.response.length;i++) {
+						$scope.purchasedCoursesList.push(JSON.parse(res.data.response[i].purchasedCourseDetails));
+					}
+				}
+			});
+	 };
+	 
+	 // used for updating users visibility settings
+	 $scope.updateUserVisisbility = function(){
+	userService.updateUserVisisbility(JSON.parse($scope.visibility),$scope.loggedInUser.id).then(function(res) {
+			if(res){
+				$scope.visibility = res.isVisible;
+			} 
+		}, function(error) {
+				console.error(error);
+			});
+	 };
+	 
+	 //Handler for Retrieving users visibility 
+	 $scope.getUserCompleteData = function(){
+		 commonService.getUserCompleteData($scope.loggedInUser.id).then(function(res){
+			if(res.user) {
+				 $scope.visibility = res.user.isVisible;
+			}
+		 });
+	 };
+	 $scope.getAllEventsByUserId = function(userId) {
+			eventService.getAllEventsByUserId(userId).then(function(res){
+				if(res) {
+					$scope.bookedEventsList  = res;
+				}
+			});
+		};
+	$scope.changePhoto = function(changeFormName) {
+		$scope.profilePicChangeForm = changeFormName;
+	};
+	
+	$scope.uploadProfilePic = function(picString) {
+		$scope.serviceLoading = true;
+		if ($scope.profilePicChangeForm === 'upload') {
+			var file = $('#profilePicFileInput')[0].files[0];
+			fileToBase64(file).then(function(picSring) {
+				userService.uploadProfilePic(picSring, $scope.loggedInUser.id);
+				$scope.changePhoto();
+				$scope.serviceLoading = false;
+			});
+		} else if (picString) {
+			userService.uploadProfilePic(picString, $scope.loggedInUser.id);
+			$scope.changePhoto();
+			$scope.serviceLoading = false;
+		}
+	};
+	 $scope.init();
+});

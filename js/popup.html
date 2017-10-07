@@ -1,0 +1,43 @@
+<html>
+<head>
+<script>
+	module.controller('trainingCtrl', function($scope, trainingService) {
+	$scope.EmailandSMS = true;
+		$scope.EmailandSMS = function(user){
+		$scope.toggleBoolean('SendEMailandSMS');
+		
+	};
+		$scope.toggleBoolean = function(property) {
+		$scope[property] = !$scope[property];
+		$scope.$applyAsync();
+		if(property === 'showpopup') {
+			if($scope[property] === true) {
+			document.addEventListener("keydown", escKeyHandler);
+			} else {
+				document.removeEventListener("keydown", escKeyHandler);
+			}
+		}
+	};
+	$scope.togglePopup = function(state) {
+		$scope.showPopup = state;
+	};
+	});
+</script>
+<link rel="stylesheet" href="popup.css">
+</head>
+		<body ng-app="">
+			<button class="btn btn-md btn-primary" ng-click="EmailandSMS(user)"  class="pointer-cursor">Email/SMS</button>
+<div class="overlay" ng-class="{'show':SendEmailandSMS}" ng-click="toggleBoolean('SendEmailandSMS')"></div>
+					
+						<div class="popup grid-md-6 grid-sm-8 grid-md-offset-3 grid-sm-offset-2" ng-class="{'show':SendEmailandSMS}">
+							<div class="row no-padding">
+								<form>
+									<div>
+										<button type="button" class="btn btn-md btn-primary" ng-click="Email(User)">Email</button>
+										<button type="reset"  class="btn  btn-md btn-primary" ng-click="SMS(User)">SMS</button>
+									</div>
+								</form>
+							</div>
+						</div>
+		</body>
+</html>

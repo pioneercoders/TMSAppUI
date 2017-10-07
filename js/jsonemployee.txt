@@ -1,0 +1,161 @@
+Addemployee:
+{
+  "aadharNo": "7878",
+  "age": "78",
+  "currentAddress": "jhkjh",
+  "dob": "2018-09-09",
+  "emailId": "raj@gmail.com",
+  "fatherName": "jhkjh",
+  "firstName": "kjk",
+  "gender": "female",
+  "lastName": "sds",
+  "mobileNo": "sds",
+  "motherName": "sds",
+  "panCardNo": "8779879",
+  "permanentAddress": "sdfs",
+  "role": {
+    "id": "1"
+  },
+  "userName": "jkhkjh",
+  "password": "jhjkhk"
+}
+
+Login:
+{
+  "userName": "jkhkjh",
+  "password": "jhjkhk"
+}
+
+addemployeeeducationdetails:
+{
+  "id": "1",
+  "educationInfo": "Testing",
+  "empId": "1234"
+}
+addemployeprojectdetails:
+{
+  "id": "1",
+  "projectInfo": "Testing",
+  "empId": "1234"
+}
+
+addemployeeworkexpdetails:
+{
+  "id": "1",
+  "workExp": "Testing",
+  "empId": "1234"
+}
+
+
+http://localhost:8081/pccontactcenter/training/sendgroupmail?subject=testing&message=Hello!!!&totalselected=1
+[
+    "ashokwas48@gmail.com",
+    "leburuashok@gmali.com" 
+  ]
+  
+  medicine_mst_tbl
+ {
+	"id":"1",
+  "createdBy": "vamsi",
+  "createdOn": "2017-05-11",
+  "medicineCount": "4",
+  "medicineCode": "AXZ4",
+  "medicineName": "Paracetamol",
+  "medicineNoOfUnits": "5",
+  "medicinePurchasePacking": "purchased",
+  "medicineSchedule": "scheduled",
+  "status": "Active",
+  "medicineCompanyId": {"id":1},
+  "medicineDrugFormulaeId": {"id":1},
+  "medicineLocationId": {"id":1},
+  "medicineCategoryId": {"id":"1"},
+  "medicineCategoryByDoctorId": {"id":"1"},
+  "medicineMaxCount": "10",
+  "medicineMinCount": "2"
+}
+company_mst_tbl
+ {
+	"id":"1",
+  "createdBy": "vamsi",
+  "createdOn": "2017-05-11",
+  "companyCity":"bangalore",
+	"companyCode":"J123",
+	"companyName":"Johnson&Johnson",
+	"companyPhoneNo":"9880577218",
+	"companyShortName":"J&J",
+  "status": "Active"
+}
+
+getMedicineByName?medicineName=Paracetamol
+
+
+http://localhost:8084/pccontactcenter/training/getTrainingProfilesListBetweenDates?fromDate=2016-12-15 &toDate=2016-12-15
+
+
+training/gettrainingprofilesbydaterange
+training/gettrainingprofilesbydate
+intern/getinternprofilebydaterange
+intern/getinternprofilebydate
+
+admin/getcountfromtrainingbydate
+admin/getcountfromtrainingbydaterange
+admin/getcountfrominternbydate
+admin/getcountfrominternbydaterange
+
+
+List<SalesBillEntity> entityList = salesBillDao.getAllSalesBillsListByPaymentType();
+			List<SalesBillDto> dtoList = CollectionMapper.getMappingList(entityList.iterator(), SalesBillDto.class);
+			Map<Long, List<SalesBillDto>> map = new HashMap<Long, List<SalesBillDto>>();
+				for (SalesBillDto item : dtoList) {
+				list = map.get(item.getSalesPayType());
+				  if (list == null) {
+				    list = new ArrayList<SalesBillDto>();
+				    map.put(item.getSalesPayType(), list);
+				  }
+				  list.add(item);
+				}			
+			return map;
+			
+			
+hospotal employeeprofile object
+			{
+  "status": "active",
+  "employeeName": "harish",
+  "mobileNumber": "9757298735",
+  "emergencyContactNumber": "78626931698",
+  "address": "bangalore"
+}
+employeesalary object
+{
+  "amount": "20000",
+  "fromDate": "2017-05-17",
+  "toDate": "2018-05-17",
+  "employeeProfile": {
+    "id": 1
+  }
+ update salary object 
+  {
+	"id":1,
+  "amount": "25000",
+  "fromDate": "2017-05-17",
+  "toDate": "2018-05-17",
+  "employeeProfile": {
+    "id": 1
+  }
+}
+}
+
+cntrl+shift+o useless imports
+
+
+
+updates month and year queries in expirymedicine
+---------------------------------------------------
+update hosp_app_db.purchase_bill_medicine_view set PURCHASE_BILL_MEDICINE_EXPIRY_MONTH = ''
+            where PURCHASE_BILL_MEDICINE_EXPIRY_MONTH = '';
+
+update hosp_app_db.purchase_bill_medicine_view set PURCHASE_BILL_MEDICINE_EXPIRY_YEAR = ''
+            where PURCHASE_BILL_MEDICINE_EXPIRY_YEAR = '';
+			
+			
+			CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `hosp_app_db`.`medicine_detail_view` AS SELECT `mmt`.`MEDICINE_NAME` as `MEDICINE_NAME`,`mcmt`.`MEDICINE_CATEGORY_NAME` as `MEDICINE_CATEGORY_NAME` FROM (`medicine_mst_tbl` `mmt` join `medicine_category_mst_tbl` `mcmt`) where `mmt`.`MEDICINE_CATEGORY_ID` = `mcmt`.`ID`;

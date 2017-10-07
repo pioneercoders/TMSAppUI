@@ -1,0 +1,375 @@
+<html>
+<head>
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/app.css">
+	
+</head>
+<body>
+	<div class="col-12">
+		<div class="header">
+			<div class="logo">
+				<a href="#"><img src="../images/logo.png"></img></a>
+			</div>
+			<div class="header-middle">
+				<span>Timesheet Management And Tracking System</span>
+			</div>
+			<div class="header-login">
+				<span>Login</span>
+				<div class="col-6">	
+					<div class="emplogin" id="empregister">
+						<div>
+							<form class="emp-login">
+								<h2>Employee Login Form</h2>
+								<hr>
+								<div class="imgcontainer">
+									<img src="../images/login.png"" alt="login" class="avatar">
+								</div>
+								<div class="container">
+									<label>Username</label>
+									<input type="text" placeholder="Enter Employee Id" name="uname" required>
+									<label>Password</label>
+									<input type="password" placeholder="Enter Password" name="psw" required>
+									<button type="submit">Login</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<span><a href="#" onclick="empLogin();"><i class="fa fa-sign-in"></i></a></span>
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="col-2">
+			<div class="nav">
+				<ul> 
+					<li>
+						<a href="#" onclick="dashboard();">
+							<i class="fa fa-home"></i>
+							<span>Dashboard</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" onclick="employeeList();">
+							<i class="fa fa-users"></i>
+							<span>Employees</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" onclick="project();">
+							<i class="fa fa-th-large"></i>
+							<span>Projects</span>
+							<i class="fa fa-angle-right" style="float:right"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" onclick="prjtTimeSheet();">
+							<i class="fa fa-clock-o" ></i>
+							<span>Timesheet</span>
+							<i class="fa fa-angle-right" style="float:right"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" onclick="timeSheet();">
+							<i class="fa fa-calendar"></i>
+							<span>Attendance</span>
+							<i class="fa fa-angle-right" style="float:right"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-10">
+			<div id="dashboard">
+				<h3>Employee Dashboard</h3>
+			</div>
+			<div id="employee">
+				<h3>Employee List</h3>
+				<div class="emp-button">
+					<div><input type="button" class="emp-button" value="New Employee Details" onclick="enterEmpDetails();"/></div>
+				</div>
+				<div class="col-9">
+					Ashok
+				</div>
+				<div>
+					<table class="col-10" id="emp-table">
+						<tr>
+							<th class="col-3">Employee Id</th>
+							<th class="col-3">Employee Name</th>
+							<th class="col-3">Salary</th>
+							<th class="col-3">Employee Progress</th>
+						</tr>
+						<tr>
+							<td class="col-3">101</td>
+							<td class="col-3">xxxxxxx</td>
+							<td class="col-3">xxxxxxx</td>
+							<td class="col-3">xxxxxxx</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="project" id="projectStatus">
+				<div>
+					<div class="Project-header">
+						<h2>Project</h2>
+					</div>
+					<div class="prjt-button">
+						<div><input type="button" class="prjt" value="Enter Project Details" onclick="enterProjectDetails();"/></div>
+						<div class="col-9">
+							<div class="projectDetails" id="nav-enterProjectDetails">
+								<div class="prjt-header">
+									<label>Enter Project Details</label>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Project Id</label>
+									<div class="col-8">
+										<input type="text"/>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Project Title</label>
+									<div class="col-8">
+										<input type="text"/>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Project Duration</label>
+									<div class="col-8">
+										<input type="text"/>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Project Status</label>
+									<div class="col-8">
+										<select>
+											<option>In Progress</option>
+											<option>Open</option>
+											<option>Resold</option>
+											<option>Closed</option>
+										</select>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4"></label>
+									<div class="col-8">
+										<input type="button" value="submit" style="width:20%;"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="project-tab">
+						<table class="col-10" id="prjt-table">
+							<tr style="border-bottom:1px solid black;">
+								<th class="col-3">Project Id</th>
+								<th class="col-3">Project Title</th>
+								<th class="col-3">Project Duration</th>
+								<th class="col-3">Project Status</th>
+							</tr>
+							<tr>
+								<td class="col-3">1001</td>
+								<td class="col-3">Pioneer Coders</td>
+								<td class="col-3">6 Months</td>
+								<td class="col-3">
+									<select>
+										<option>In Progress</option>
+										<option>Open</option>
+										<option>Resold</option>
+										<option>Closed</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="col-3">1002</td>
+								<td class="col-3">Trie Coders</td>
+								<td class="col-3">6 Months</td>
+								<td class="col-3">
+									<select>
+										<option>In Progress</option>
+										<option>Open</option>
+										<option>Resold</option>
+										<option>Closed</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="col-3">1003</td>
+								<td class="col-3">Hospital</td>
+								<td class="col-3">6 Months</td>
+								<td class="col-3">
+									<select>
+										<option>In Progress</option>
+										<option>Open</option>
+										<option>Resold</option>
+										<option>Closed</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="timesheet" id="project_timesheet">
+				<div>
+					<div class="timesheet-header">
+						<label>Employee Task List with Time Sheet</label>
+					</div>
+					<div>
+						<div><input type="button" class="timesheet-button" value="Enter Timesheet Details" onclick="enterTimesheetDetails();"/></div>
+						<div class="col-9">
+							<div class="timesheetButton" id="navTimesheetButton">
+								<div class="timesheet-header">
+									<label>Enter Project Details</label>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Date</label>
+									<div class="col-8">
+										<input type="date"/>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Day</label>
+									<div class="col-8">
+										<select>
+											<option>Monday</option>
+											<option>Tuesday</option>
+											<option>Wednesday</option>
+											<option>Thursday</option>
+											<option>Friday</option>
+											<option>Saturday</option>
+											<option>Sunday</option>
+										</select>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Project Name</label>
+									<div class="col-8">
+										<select>
+											<option>Trie Coders</option>
+											<option>Pioneer Coders</option>
+											<option>Pioneer Coders Center</option>
+										</select>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Task</label>
+									<div class="col-8">
+										<textarea rows="4" cols="40"></textarea>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4">Working Hours</label>
+									<div class="col-8">
+										<input type="text"/>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="col-4"></label>
+									<div class="col-8">
+										<input type="button" value="submit" style="width:20%;"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table class="col-10 timesheet-table">
+						<tr>
+							<th class="col-2">Date</th>
+							<th class="col-2">Day</th>
+							<th class="col-3">Project Name</th>
+							<th class="col-3">Task</th>
+							<th class="col-2">Working Hours</th>
+						</tr>
+						<tr>
+							<td class="col-2"><input type="date"/></td>
+							<td class="col-2">
+								<select>
+									<option>Monday</option>
+									<option>Tuesday</option>
+									<option>Wednesday</option>
+									<option>Thursday</option>
+									<option>Friday</option>
+									<option>Saturday</option>
+									<option>Sunday</option>
+								</select>
+							</td>
+							<td class="col-3">Pioneer Coders</td>
+							<td class="col-3"><input type="textarea"/></td>
+							<td class="col-2"><input type="text"/></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="Attendance" id="Attend">
+				<div>
+					<div class="tabs" id="tabs-button">
+						<div class="tabs-btn"><a href="#" onclick="showDaily();">Daily</a></div>
+						<div class="tabs-btn"><a href="#"  onclick="showMonthly();">Monthly</a></div>
+						<p>Attendance</p>
+					</div>
+					<div id="daily" >
+						<div class="col-9">
+							<div class="Attend-time">
+								<div class="ts-header">
+									<label>Employee Daily TimeSheet</label>
+								</div>
+								<div class="input-group1">
+									<label class="col-4">Date</label>
+									<div class="col-8">
+										<input type="date"/>
+									</div>
+								</div>
+								<div class="input-group1">
+									<label class="col-4">Project Name</label>
+									<div class="col-8">
+										<input type="text"/>
+									</div>
+								</div>
+								<div class="input-group1">
+									<label class="col-4">Time In</label>
+									<div class="col-8">
+										<input type="time"/>
+									</div>
+								</div>
+								<div class="input-group1">
+									<label class="col-4">Time Out</label>
+									<div class="col-8">
+										<input type="time"/>
+									</div>
+								</div>
+								<div class="input-group1">
+									<label class="col-4"></label>
+									<div class="col-8">
+										<input type="button" value="submit" style="width:20%;"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="monthly">
+						<div class="col-9">
+							<div class="Attend-time">
+								<div class="ts-header">
+									<label>Employee Monthly TimeSheet</label>
+								</div>
+								<table class="col-10" id="prjt-table">
+									<tr style="border-bottom:1px solid black;">
+										<th class="col-3">Date</th>
+										<th class="col-3">Project Name</th>
+										<th class="col-3">Time In</th>
+										<th class="col-3">Time Out</th>
+									</tr>
+									<tr>
+										
+									</tr>
+								</table>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../js/timesheet.js"></script>
+</html>
